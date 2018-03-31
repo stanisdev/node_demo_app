@@ -21,6 +21,9 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const db = require(path.join(__dirname, '/db/models'));
+app.set('db', db);
+
 module.exports = app;
 
 /**

@@ -4,7 +4,8 @@ module.exports = {
     password: 'root',
     database: 'node_demo_app',
     host: '127.0.0.1',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: true
   },
   test: {
     username: 'root',
