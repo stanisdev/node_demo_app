@@ -22,3 +22,5 @@ function normalizePort(value) {
 app.listen(port, () => {
   console.log(`Node demo app listening on port ${port}!`);
 });
+
+module.exports = app;

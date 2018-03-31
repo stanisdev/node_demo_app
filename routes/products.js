@@ -5,7 +5,6 @@ const db = app.get('db');
 const path = require('path');
 const filters = require(path.join(process.env.ROOT_DIR + '/services/filters.js'));
 
-
 /**
  * Remove product by id
  */
