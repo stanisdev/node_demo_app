@@ -11,6 +11,9 @@
     "glob": "7.1.2",
     "http-errors": "1.6.2",
     "method-override": "2.3.10",
-    "morgan": "1.9.0"
+    "morgan": "1.9.0",
+    "mysql2": "1.5.3",
+    "sequelize": "4.37.5",
+    "sequelize-cli": "4.0.0"
   }
 }
