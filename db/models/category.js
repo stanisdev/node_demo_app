@@ -1,7 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
 
   const Category = sequelize.define('Category', {
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "can't be blank"
+        },
+        async isUnique(name) {
+          const category = await Category.findOne({
+            where: { name },
+            attributes: ['id']
+          });
+          if (category instanceof Object) {
+            throw new Error('category already exists');
+          }
+          return true;
+        }
+      }
+    },
   }, {
     createdAt: false,
     updatedAt: false,
