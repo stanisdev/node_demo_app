@@ -30,13 +30,15 @@ Object.keys(db).forEach(modelName => {
 
 sequelize.assembleErrors = function(errors) {
   const messages = {}
-  errors.forEach((field) => {
-    let path = field.path;
-    if (Array.isArray(messages[path])) {
-      return messages[path].push(field.message);
-    }
-    messages[field.path] = [field.message];
-  });
+  if (Array.isArray(errors)) {
+    errors.forEach((field) => {
+      let path = field.path;
+      if (Array.isArray(messages[path])) {
+        return messages[path].push(field.message);
+      }
+      messages[field.path] = [field.message];
+    });
+  }
   return messages;
 };
 

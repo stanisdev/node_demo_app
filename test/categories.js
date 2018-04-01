@@ -80,13 +80,10 @@ describe('Get, Create categories and products', () => {
     });
   });
 
-  describe('POST /categories/1/products', () => {
+  describe('GET /categories/1/products', () => {
     it('Should get products by category id', (done) => {
       chai.request(server)
         .get('/categories/1/products')
-        .send({
-          name: 'Phones'
-        })
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.an('array');
@@ -94,6 +91,109 @@ describe('Get, Create categories and products', () => {
           res.body[0].id.should.be.equal(1);
           res.body[0].name.should.be.equal('Galaxy');
           res.body[0].price.should.be.equal(1000.45);
+          done();
+        });
+    });
+  });
+
+  describe('POST /categories/1/products', () => {
+    it('Should create new product', (done) => {
+      chai.request(server)
+        .post('/categories/1/products')
+        .send({
+          name: 'Shoes',
+          price: 490.13
+        })
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.an('object');
+          res.body.name.should.be.equal('Shoes');
+          done();
+        });
+    });
+  });
+
+  describe('POST /categories/1/products', () => {
+    it('Should restrict to create new product', (done) => {
+      chai.request(server)
+        .post('/categories/1/products')
+        .send({
+          name: '',
+          price: 490.13
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.errors.name[0].should.be.equal("can't be blank");
+          done();
+        });
+    });
+  });
+
+  describe('POST /categories/1/products', () => {
+    it('Should restrict to create new product', (done) => {
+      chai.request(server)
+        .post('/categories/1/products')
+        .send({
+          name: 'Shoes',
+          price: ''
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.errors.price[0].should.be.equal("can't be blank");
+          done();
+        });
+    });
+  });
+
+  describe('POST /categories/1/products', () => {
+    it('Should restrict to create new product', (done) => {
+      chai.request(server)
+        .post('/categories/1/products')
+        .send({
+          name: 'Shoes',
+          price: 0
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.errors.price[0].should.be.equal("price must be greater then 0");
+          done();
+        });
+    });
+  });
+
+  describe('POST /categories/1/products', () => {
+    it('Should restrict to create new product', (done) => {
+      chai.request(server)
+        .post('/categories/1/products')
+        .send({
+          name: 'iPhone',
+          price: 1000
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.errors.name[0].should.be.equal("product already exists");
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /products/2', () => {
+    it('Should delete product by id', (done) => {
+      chai.request(server)
+        .delete('/products/2')
+        .end((err, res) => {
+          res.should.have.status(204);
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /products/9999', () => {
+    it('Should restrict to delete non existing product by id', (done) => {
+      chai.request(server)
+        .delete('/products/9999')
+        .end((err, res) => {
+          res.should.have.status(422);
           done();
         });
     });

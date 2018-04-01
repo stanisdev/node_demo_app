@@ -81,7 +81,7 @@ router.post('/:id/products', filters.idIsNumber, async (req, res, next) => {
   try {
     var data = {
       name: req.body.name.trim(),
-      price: req.body.price.trim(),
+      price: req.body.price.toString().trim(),
       category_id: req.params.id
     };
     var product = db.Product.build(data);
