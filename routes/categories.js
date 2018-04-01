@@ -69,7 +69,7 @@ router.post('/', async (req, res, next) => {
 /**
  * Get products list of selected category
  */
-router.get('/:id/products', filters.idIsNumber, async (req, res, next) => {
+router.get('/:id/products', filters.idIsNumber, filters.categoryExists, async (req, res, next) => {
   const products = await db.Product.getAll(req.params.id);
   return res.json(products);
 });
@@ -77,7 +77,7 @@ router.get('/:id/products', filters.idIsNumber, async (req, res, next) => {
 /**
  * Create new products
  */
-router.post('/:id/products', filters.idIsNumber, async (req, res, next) => {
+router.post('/:id/products', filters.idIsNumber, filters.categoryExists, async (req, res, next) => {
   try {
     var data = {
       name: req.body.name.trim(),
